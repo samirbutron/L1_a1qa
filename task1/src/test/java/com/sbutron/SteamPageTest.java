@@ -1,13 +1,12 @@
 package com.sbutron;
 
 import java.time.Duration;
-//import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.chrome.ChromeDriver;
-//import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -15,79 +14,46 @@ import org.testng.annotations.*;
 public class SteamPageTest
 {
 
+    private WebDriver driver;
+
     @BeforeTest
     public void setup() {
-        //WebDriverManager.edgedriver().setup();
-        //WebDriver driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions().addArguments(("--remote-allow-origins=*"));
+        driver = new ChromeDriver(options);
     }
-
-    //WebDriver driver = new ChromeDriver();
-    //ChromeOptions options = new ChromeOptions();
-    //options.addArguments("--remote-allow-origins=*");
 
     @AfterTest
     public void teardown(){
-        //driver.quit();
+        driver.quit();
     }
 
-
-
-    // Test scenario "Invalid Login"
-
-    //Method could be renamed to: assertMainPageTitleIsNotNull
     @Test
-    public void mainPageIsDisplayed(){
-        //WebDriverManager.firefoxdriver().setup();
-        WebDriver driver = new FirefoxDriver();
-        driver.manage().window().maximize();
+    public void InvalidLogin(){
+        //Step 1 -> Navigate to main page
         driver.get("https://store.steampowered.com");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         String mainTitle = driver.getTitle();
         Assert.assertNotNull(mainTitle, "Title is not displayed, page may not have loaded");
-        driver.quit();
-    }
 
-    //Method could be renamed to: assertLoginTitleIsNotNull
-    @Test
-    public void loginPageOpen(){
-        //WebDriverManager.chromedriver().setup();
-        WebDriver driver = new FirefoxDriver();
-        driver.get("https://store.steampowered.com");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        //Step 2 -> Click login button
         WebElement loginButton = driver.findElement(By.className("global_action_link"));
         loginButton.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         Assert.assertTrue(driver.findElement(By.className("responsive_page_content")).isDisplayed());
-        driver.quit();
-    }
 
-    @Test
-    public void invalidLoginAttempt () {
-        //WebDriverManager.chromedriver().setup();
-        WebDriver driver = new FirefoxDriver();
-        driver.get("https://store.steampowered.com");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        WebElement loginButton = driver.findElement(By.className("global_action_link"));
-        loginButton.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        WebElement joinLogo = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[2]/img"));
+        //Step 3 -> Input random string as credentials and click sign in button
+        WebElement joinLogo = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[2]/img")); //Couldn't find Loading element
         Assert.assertTrue(joinLogo.isDisplayed(), "Join-Steam logo didn't displayed");
-
-        WebElement userPasswordBox = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[1]/div/div/div/div[2]/div/form/div[1]/input"));
-
-        WebElement userNameBox = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[1]/div/div/div/div[2]/div/form/div[2]/input"));
-
+        WebElement userPasswordBox = driver.findElement(By.xpath("//input[@type='password' and @class='newlogindialog_TextInput_2eKVn']"));
+        WebElement userNameBox = driver.findElement(By.xpath("//input[@type='text' and @class='newlogindialog_TextInput_2eKVn']"));
         userPasswordBox.sendKeys("TestPassword");
         userNameBox.sendKeys("TestUser");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
         WebElement submitButton = driver.findElement(By.className("newlogindialog_SignInButtonContainer_14fsn"));
         submitButton.click();
 
         WebElement formError = driver.findElement(By.className("newlogindialog_FormError_1Mcy9"));
         String signInMessage = formError.getText();
-        //System.out.println(signInMessage); ////Helps test the String obtain, check if output is the one desired
         Assert.assertNotNull(signInMessage, "Error not prompted");
-        driver.quit();
     }
 }
