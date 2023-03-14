@@ -43,8 +43,7 @@ public class SteamPageTest
         driver.get("https://store.steampowered.com");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         String mainTitle = driver.getTitle();
-        //System.out.println(mainTitle); //Helps test the String obtain, check if output is the one desired
-        Assert.assertNotNull(mainTitle);
+        Assert.assertNotNull(mainTitle, "Title is not displayed, page may not have loaded");
         driver.quit();
     }
 
@@ -58,9 +57,8 @@ public class SteamPageTest
         WebElement loginButton = driver.findElement(By.className("global_action_link"));
         loginButton.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        String loginTitle = driver.getTitle();
-        //System.out.println(loginTitle); //Helps test the String obtain, check if output is the one desired
-        Assert.assertNotNull(loginTitle);
+        Assert.assertTrue(driver.findElement(By.className("responsive_page_content")).isDisplayed());
+        driver.quit();
     }
 
     @Test
@@ -72,6 +70,9 @@ public class SteamPageTest
         WebElement loginButton = driver.findElement(By.className("global_action_link"));
         loginButton.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        WebElement joinLogo = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[2]/img"));
+        Assert.assertTrue(joinLogo.isDisplayed(), "Join-Steam logo didn't displayed");
 
         WebElement userPasswordBox = driver.findElement(By.xpath("//html/body/div[1]/div[7]/div[6]/div/div[1]/div/div/div/div[2]/div/form/div[1]/input"));
 
@@ -86,6 +87,7 @@ public class SteamPageTest
         WebElement formError = driver.findElement(By.className("newlogindialog_FormError_1Mcy9"));
         String signInMessage = formError.getText();
         //System.out.println(signInMessage); ////Helps test the String obtain, check if output is the one desired
-        Assert.assertNotNull(signInMessage);
+        Assert.assertNotNull(signInMessage, "Error not prompted");
+        driver.quit();
     }
 }
