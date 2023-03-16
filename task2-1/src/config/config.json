@@ -1,0 +1,9 @@
+{
+  "BROWSER": "chrome",
+  "URL": "https://store.steampowered.com",
+  "IMPLICITLY_WAIT": 10,
+  "PAGE_LOAD_TIMEOUT": 30,
+  "EXPLICIT_WAIT": 10,
+  "YEAR" : "2013",
+  "GAME" : "Dota 2"
+}

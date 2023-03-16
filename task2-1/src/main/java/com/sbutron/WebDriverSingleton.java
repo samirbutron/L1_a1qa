@@ -1,21 +1,23 @@
 package com.sbutron;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverSingleton {
 
-    public static ChromeDriver driver;
+    public static WebDriver driver;
 
     private WebDriverSingleton(){
 
     }
 
-    public static ChromeDriver getInstance(){
+    public static WebDriver getInstance(){
         if(driver == null){
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions().addArguments(("--remote-allow-origins=*"));
+            options.addArguments("incognito");
             driver = new ChromeDriver(options);
         }
         return driver;
