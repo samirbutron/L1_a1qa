@@ -1,22 +1,16 @@
 package com.sbutron;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ConfigJSON {
-    @JsonProperty("BROWSER")
+    @JsonProperty("browser")
     private String browser;
-    @JsonProperty("URL")
+    @JsonProperty("url")
     private String url;
-    @JsonProperty("IMPLICITLY_WAIT")
-    private int implicitlyWait;
-    @JsonProperty("PAGE_LOAD_TIMEOUT")
-    private int pageLoadTimeout;
-
-    @JsonProperty("YEAR")
+    @JsonProperty("year")
     private String year;
-
-    @JsonProperty("GAME")
+    @JsonProperty("game")
     private String game;
-
     @JsonProperty("EXPLICIT_WAIT")
     private int explicitWait;
 
@@ -26,21 +20,13 @@ public class ConfigJSON {
     public String getUrl() {
         return this.url;
     }
-    public int getImplicitlyWait() {
-        return this.implicitlyWait;
-    }
-    public int getPageLoadTimeout() {
-        return this.pageLoadTimeout;
-    }
-
     public String getYear(){
         return this.year;
     }
-
     public String getGame(){
         return this.game;
     }
-
     public int getExplicitWait(){ return this.explicitWait; }
 
 }
+

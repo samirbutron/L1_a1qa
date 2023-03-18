@@ -2,13 +2,14 @@ package com.sbutron;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class GameData {
     private String name;
     private ArrayList platforms;
     private Date releaseDate;
     private Review review;
-    private int price;
+    private Double price;
 
     public String getName() {
         return name;
@@ -34,10 +35,10 @@ public class GameData {
     public void setReview(Review review) {
         this.review = review;
     }
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -52,4 +53,8 @@ public class GameData {
                 '}';
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, platforms, releaseDate, review, price);
+    }
 }
