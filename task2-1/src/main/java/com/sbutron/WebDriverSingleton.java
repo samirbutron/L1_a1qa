@@ -31,7 +31,7 @@ public class WebDriverSingleton {
             WebDriverManager.chromedriver().setup();
 
             ChromeOptions options = new ChromeOptions();
-            if (!config.getRemoteAllowOrigins()) {
+            if (config.getRemoteAllowOrigins()) {
                 options.addArguments("--remote-allow-origins=*");
             }
             if (config.getIncognito()) {
