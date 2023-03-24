@@ -2,12 +2,16 @@ package com.sbutron;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.invoke.SwitchPoint;
 
 public class WebDriverSingleton {
 
@@ -27,17 +31,25 @@ public class WebDriverSingleton {
     }
 
     public static WebDriver getInstance() throws IOException {
-        if(driver == null){
-            WebDriverManager.chromedriver().setup();
-
-            ChromeOptions options = new ChromeOptions();
-            if (!config.getRemoteAllowOrigins()) {
-                options.addArguments("--remote-allow-origins=*");
+        if (driver == null) {
+            switch (config.getBrowser()) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions optionsC = new ChromeOptions();
+                    if (config.getRemoteAllowOrigins()) {
+                        optionsC.addArguments("--remote-allow-origins=*");
+                    }
+                    if (config.getIncognito()) {
+                        optionsC.addArguments("incognito");
+                    }
+                    driver = new ChromeDriver(optionsC);
+                    break;
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver();
+                    driver.manage().window().setSize(new Dimension(2000,1800));
+                    break;
             }
-            if (config.getIncognito()) {
-                options.addArguments("incognito");
-            }
-            driver = new ChromeDriver(options);
         }
         return driver;
     }

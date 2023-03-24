@@ -71,7 +71,7 @@ public class SteamPage{
     }
 
     private WebElement getSearchBoxResult() {
-            searchBoxResult = getDriver().findElement(By.xpath("//input[@id='term' and @name='displayterm']"));
+            searchBoxResult = getDriver().findElement(By.xpath("//*[@id='term']"));
         return searchBoxResult;
     }
 
