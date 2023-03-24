@@ -1,13 +1,10 @@
 package com.sbutron;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.interactions.Actions;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,113 +14,118 @@ import java.util.List;
 public class SteamPage{
 
     //All page element relates to actions must be described here
-    @FindBy(xpath = "//div[@id='footer']")
-    @CacheLookup
     private WebElement footer;
-    @FindBy(xpath = "//div[@id='footer_text']/child::div//a[1]")
-    @CacheLookup
     private WebElement privacyPolicyButton;
-    @FindBy(className = "blockbg")
-    @CacheLookup
     private WebElement privacyPolicyHeader;
-    @FindBy(id = "languages")
-    @CacheLookup
     private WebElement privacyLanguages;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[1]")
-    @CacheLookup
-    private WebElement privacyLanguageEn;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[2]")
-    @CacheLookup
-    private WebElement privacyLanguageEs;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[3]")
-    @CacheLookup
-    private WebElement privacyLanguageFr;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[4]")
-    @CacheLookup
-    private WebElement privacyLanguageDe;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[5]")
-    @CacheLookup
-    private WebElement privacyLanguageIt;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[6]")
-    @CacheLookup
-    private WebElement privacyLanguageRu;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[7]")
-    @CacheLookup
-    private WebElement privacyLanguageJp;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[8]")
-    @CacheLookup
-    private WebElement privacyLanguagePt;
-    @FindBy(xpath = "//*[@id=\"languages\"]/a[9]")
-    @CacheLookup
-    private WebElement privacyLanguageBr;
-    @FindBy(xpath = "//*[@id=\"newsColumn\"]/i[3]")
-    @CacheLookup
+    private List<WebElement> privacySupportedLanguages;
     private WebElement privacySigned;
-    @FindBy(id = "store_nav_search_term")
-    @CacheLookup
     private WebElement searchBar;
-    @FindBy(xpath = "//input[@id='term' and @name='displayterm']") //div[@class='searchbar_left']/input
-    @CacheLookup
     private WebElement searchBoxResult;
-    @FindBy(xpath = "//div[@id='search_resultsRows']/child::a[1]")
-    @CacheLookup
     private WebElement firstResult;
 
-    public SteamPage(){
-        PageFactory.initElements(WebDriverSingleton.getInstance(), this);
+    private WebElement getFooter() {
+        if(footer == null){
+                    footer =getDriver().findElement(By.xpath("//div[@id='footer']"));
+                }
+    return footer;
     }
-    private WebDriver getDriver(){
-        return WebDriverSingleton.getInstance();
-    }
-    private WebElement findElement(By locator){
-        return getDriver().findElement(locator);
-    }
-    public void navigateToPrivacyPolicy(){ privacyPolicyButton.click();}
-    public boolean isPrivacyPolicyOpened(){ return privacyPolicyHeader.isDisplayed();
-        //Could also change to .contains("/privacy_agreement/")
-    }
-    public WebElement getFooter(){
-        return footer;
+    private WebElement getPrivacyPolicyButton() {
+        if (privacyPolicyButton == null) {
+            privacyPolicyButton = getDriver().findElement(By.xpath("//div[@id='footer_text']/child::div//a[1]"));
+        }
+        return privacyPolicyButton;
     }
 
-    public boolean isPrivacyLanguagesListDisplayed(){ return privacyLanguages.isDisplayed(); }
-    public boolean isPrivacyLanguagesSwitchDisplayed(){
-        return privacyLanguageEn.isDisplayed() && privacyLanguageEs.isDisplayed() && privacyLanguageFr.isDisplayed() && privacyLanguageDe.isDisplayed() &&
-                privacyLanguageIt.isDisplayed() && privacyLanguageRu.isDisplayed() && privacyLanguageJp.isDisplayed() && privacyLanguagePt.isDisplayed() &&
-                privacyLanguageBr.isDisplayed();
-    }
-    public boolean isPrivacySigned(String year){
-        return privacySigned.getText().contains(year);
-    }
-    public void searchInStore(String game){
-        try {
-            searchBar.sendKeys(game);
-            searchBar.submit();
-        } catch(StaleElementReferenceException e){
-            searchBar = findElement(By.id("store_nav_search_term"));
-            searchBar.sendKeys(game);
-            searchBar.submit();
+    private WebElement getPrivacyPolicyHeader() {
+        if (privacyPolicyHeader == null) {
+            privacyPolicyHeader = getDriver().findElement(By.className("blockbg"));
         }
+        return privacyPolicyHeader;
     }
-    public boolean isSearchPageDisplayed() {
-        return searchBoxResult.isDisplayed();
+
+    private WebElement getPrivacyLanguages() {
+        if (privacyLanguages == null) {
+            privacyLanguages = getDriver().findElement(By.id("languages"));
+        }
+        return privacyLanguages;
     }
-    public WebElement getSearchBoxResult() {
+
+    private List<WebElement> getPrivacySupportedLanguages() {
+        if (privacySupportedLanguages == null) {
+            privacySupportedLanguages = getDriver().findElements(By.xpath("//*[@id='languages']/a"));
+        }
+        return privacySupportedLanguages;
+    }
+
+    private WebElement getPrivacySigned() {
+        if (privacySigned == null) {
+            privacySigned = getDriver().findElement(By.xpath("//*[@id='newsColumn']/i[3]"));
+        }
+        return privacySigned;
+    }
+
+    private WebElement getSearchBar() {
+            searchBar = getDriver().findElement(By.id("store_nav_search_term"));
+        return searchBar;
+    }
+
+    private WebElement getSearchBoxResult() {
+            searchBoxResult = getDriver().findElement(By.xpath("//input[@id='term' and @name='displayterm']"));
         return searchBoxResult;
     }
 
-    public boolean isSearchBoxResultSucessful(String search){
-        try {
-            return searchBoxResult.getAttribute("value").contains(search);
-        } catch (StaleElementReferenceException e){
-            searchBoxResult = findElement(By.xpath("//input[@id='term' and @name='displayterm']"));
-            return searchBoxResult.getAttribute("value").contains(search);
+    private WebElement getFirstResult() {
+        if (firstResult == null) {
+            firstResult = getDriver().findElement(By.xpath("//div[@id='search_resultsRows']/child::a[1]"));
         }
+        return firstResult;
+    }
+
+    public SteamPage() throws IOException {
+    }
+    private WebDriver getDriver(){
+        try {
+            return WebDriverSingleton.getInstance();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private Utility utility = new Utility();
+    public void navigateToPrivacyPolicy(){ getPrivacyPolicyButton().click();}
+    public boolean isPrivacyPolicyOpened(){ return getPrivacyPolicyHeader().isDisplayed();
+        //Could also change to .contains("/privacy_agreement/")
+    }
+    public void goToFooter(){
+        new Actions(getDriver()).scrollToElement(getFooter()).perform();
+    }
+
+    public void waitForSearchBox(){
+        utility.waitForElement(getSearchBoxResult(), getDriver());
+    }
+
+    public boolean isPrivacyLanguagesListDisplayed(){ return getPrivacyLanguages().isDisplayed(); }
+    public boolean isPrivacyLanguagesSwitchDisplayed(){
+        return utility.checkSupportedLanguages(getPrivacySupportedLanguages());
+    }
+    public boolean isPrivacySigned(String year){
+        return getPrivacySigned().getText().contains(year);
+    }
+    public void searchInStore(String game){
+        getSearchBar().sendKeys(game);
+        getSearchBar().submit();
+    }
+    public boolean isSearchPageDisplayed() {
+        return getSearchBoxResult().isDisplayed();
+    }
+
+    public boolean isSearchBoxResultSucessful(String search){
+            return getSearchBoxResult().getAttribute("value").contains(search);
     }
 
 
     public boolean isFirstResultMatching(String search) {
-        return firstResult.getText().contains(search);
+        return getFirstResult().getText().contains(search);
     }
 
     public GameData saveGameDataInResultPosition(String position) throws ParseException {

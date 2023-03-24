@@ -1,9 +1,9 @@
 {
   "browser": "chrome",
+  "incognito": true,
+  "remote-allow-origins": true,
   "url": "https://store.steampowered.com/",
-  "EXPLICIT_WAIT": 10,
-  "year" : "2023",
-  "game" : "Dota 2"
+  "EXPLICIT_WAIT": 10
 
 }
 

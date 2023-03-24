@@ -7,12 +7,13 @@ public class ConfigJSON {
     private String browser;
     @JsonProperty("url")
     private String url;
-    @JsonProperty("year")
-    private String year;
-    @JsonProperty("game")
-    private String game;
     @JsonProperty("EXPLICIT_WAIT")
     private int explicitWait;
+
+    @JsonProperty("incognito")
+    private boolean incognito;
+    @JsonProperty("remote-allow-origins")
+    private boolean remoteAllowOrigins;
 
     public String getBrowser() {
         return this.browser;
@@ -20,13 +21,12 @@ public class ConfigJSON {
     public String getUrl() {
         return this.url;
     }
-    public String getYear(){
-        return this.year;
-    }
-    public String getGame(){
-        return this.game;
-    }
     public int getExplicitWait(){ return this.explicitWait; }
-
+    public boolean getIncognito() {
+        return incognito;
+    }
+    public boolean getRemoteAllowOrigins() {
+        return remoteAllowOrigins;
+    }
 }
 
