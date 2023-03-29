@@ -1,2 +1,7 @@
-com\sbutron\App.class
+com\sbutron\GameData.class
+com\sbutron\ConfigJSON.class
+com\sbutron\Utility.class
+com\sbutron\Review.class
+com\sbutron\SteamPage.class
 com\sbutron\WebDriverSingleton.class
+com\sbutron\TestDataJSON.class
