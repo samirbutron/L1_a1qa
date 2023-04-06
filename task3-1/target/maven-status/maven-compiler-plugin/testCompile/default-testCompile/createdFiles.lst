@@ -1,0 +1,14 @@
+src\main\Waits.class
+src\utilities\Util.class
+src\utilities\ConditionalWait.class
+src\utilities\FirefoxCaps.class
+src\test\java\com\sbutron\PageTest.class
+src\utilities\Logger.class
+src\main\BaseForm.class
+src\main\WaitsUtil.class
+src\utilities\Browser.class
+src\utilities\ChromeCaps.class
+src\utilities\BrowserFactory.class
+src\utilities\BrowserCapabilities.class
+src\utilities\SettingsReader.class
+src\main\BaseElement.class
