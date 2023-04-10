@@ -1,4 +1,4 @@
-package src.utilities;
+package src.browserfactory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -20,14 +20,12 @@ public class BrowserFactory {
             case "chrome" -> {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = (ChromeOptions) browserCapabilities.getCaps(browser);
-                WebDriver driverC = new ChromeDriver(options);
-                return driverC;
+                return new ChromeDriver(options);
             }
             case "firefox" -> {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions options = (FirefoxOptions) browserCapabilities.getCaps(browser);
-                WebDriver driverF = new FirefoxDriver();
-                return driverF;
+                return new FirefoxDriver(options);
             }
             case default -> throw new IllegalArgumentException("Invalid browser name: " + browser);
         }
@@ -39,14 +37,15 @@ public class BrowserFactory {
             case "chrome" -> {
                 ChromeCaps capabilitiesC = new ChromeCaps();
                 options = capabilitiesC.getCaps();
+                return options;
             }
             case "firefox" -> {
                 FirefoxCaps capabilitiesF = new FirefoxCaps();
                 options = capabilitiesF.getCaps();
+                return options;
             }
 
             default -> throw new IllegalArgumentException("Invalid browser name:" + browserType);
         }
-        return options;
     }
 }

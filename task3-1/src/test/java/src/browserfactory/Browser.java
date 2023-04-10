@@ -1,6 +1,7 @@
-package src.utilities;
+package src.browserfactory;
 
 import org.openqa.selenium.WebDriver;
+import src.utilities.SettingsReader;
 
 import java.io.IOException;
 import java.util.Set;
@@ -11,8 +12,7 @@ public class Browser {
     public static WebDriver driver;
 
     private Browser() throws IOException {
-        SettingsReader settingsReader = new SettingsReader();
-        settingsReader.readFile();
+        SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
         driver = BrowserFactory.getDriver(settingsReader.getString("browser"));
     }
     public static Browser getInstance() throws IOException {
@@ -21,9 +21,8 @@ public class Browser {
         }
         return instance;
     }
-
     public WebDriver getDriver() throws IOException {
-        if( driver == null){
+        if( instance == null){
             instance = new Browser();
         }
         return  driver;

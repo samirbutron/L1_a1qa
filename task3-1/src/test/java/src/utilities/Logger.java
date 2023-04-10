@@ -6,7 +6,7 @@ public class Logger {
 
     private  Logger(){
     }
-
+    //FIXME Implementar logger... dios sepa en que parte
     public void info (String message){
         System.out.println(message);
     }

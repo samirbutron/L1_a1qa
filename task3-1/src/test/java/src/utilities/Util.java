@@ -4,14 +4,10 @@ import java.util.List;
 
 public class Util {
 
-    public String listToString(List<Object> list){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<list.size(); i++){
-            if (i > 0){
-                sb.append(", ");
-            }
-            sb.append(list.get(i).toString());
-        }
-        return sb.toString();
+    public String listToString(List<Object> list) {
+        String stringList = list.toString();
+        stringList = stringList.replace("[","");
+        stringList = stringList.replace("]","");
+        return stringList;
     }
 }

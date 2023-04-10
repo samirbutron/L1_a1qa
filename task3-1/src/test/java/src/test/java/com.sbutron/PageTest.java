@@ -3,20 +3,27 @@ package src.test.java.com.sbutron;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import src.utilities.Browser;
+import src.browserfactory.Browser;
+import src.main.PageObject;
 import src.utilities.SettingsReader;
 
 import java.io.IOException;
 
 public class PageTest {
-    private Browser browser = new Browser();
-    private WebDriver driver;
-    private final SettingsReader settingsReader = new SettingsReader();
+    private Browser browser;
+    private final SettingsReader config = new SettingsReader("src/test/java/src/config/config.json");
+    private  final SettingsReader testconfig = new SettingsReader("src/test/java/src/config/testconfig.json");
+    //FIXME aqui se agregaran los readers para los otros .json
+    private PageObject po;
+
+    public PageTest() throws IOException {
+    }
 
     @BeforeTest
     public void setup() throws IOException {
-        settingsReader.readFile();
         browser = Browser.getInstance();
+        po = new PageObject();
+        //FIXME instanciar otras clases creadas... Util, WaitsUtil
     }
 
     @AfterTest
@@ -26,8 +33,10 @@ public class PageTest {
 
     @Test
     public void PrivacyPolicy() throws IOException {
-        browser.goToUrl("https://demoqa.com");
-        browser.getDriver();
+        System.out.println(config.getString("browserOptions"));
+        browser.goToUrl(testconfig.getString("url"));
+        Assert.assertEquals(browser.getDriver().getTitle(),"DEMOQA", "Page title is not correct");
+        Assert.assertEquals(po.alertsCardDisplayed(),true);
 
 
     }

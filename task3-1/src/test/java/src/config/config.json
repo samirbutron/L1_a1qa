@@ -1,8 +1,4 @@
 {
   "browser": "chrome",
-  "test": "inside method",
-  "testint": 13,
-  "url": "https://demoqa.com",
-  "EXPLICIT_WAIT": 10,
   "browserOptions":["--remote-allow-origins=*","--start-maximized","--disable-infobars","--disable-notifications"]
 }

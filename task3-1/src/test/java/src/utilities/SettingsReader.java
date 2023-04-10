@@ -5,25 +5,28 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class SettingsReader {
-    private static final SettingsReader instance = new SettingsReader();
-    private static final String path = "C:\\Users\\samir\\Documents\\s.butron\\3.Framework\\task3-1\\src\\test\\java\\src\\config\\config.json";
+    //;
     private final ObjectMapper objectMapper;
     private ObjectNode objectNode;
 
-    public SettingsReader() {
+    public SettingsReader(Path filepath) throws IOException {
         objectMapper = new ObjectMapper();
-    }
-    public static SettingsReader getInstance(){
-        return instance;
+        String contents = new String(Files.readAllBytes(filepath));
+        objectNode = (ObjectNode) objectMapper.readTree(contents);
     }
 
-    public void readFile() throws IOException {
-        byte[] fileBytes = Files.readAllBytes(Path.of(path));
+    public SettingsReader(String filepath) throws IOException{
+        this(Path.of(filepath));
+    }
+
+    public void readFile(String filepath) throws IOException {
+        byte[] fileBytes = Files.readAllBytes(Path.of(filepath));
         JsonNode jsonNode = objectMapper.readTree(fileBytes);
         if (jsonNode instanceof ObjectNode) {
             objectNode = (ObjectNode) jsonNode;

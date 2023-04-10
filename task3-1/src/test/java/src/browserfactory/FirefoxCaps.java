@@ -1,17 +1,23 @@
-package src.utilities;
+package src.browserfactory;
 
 import org.openqa.selenium.firefox.FirefoxOptions;
+import src.utilities.SettingsReader;
+import src.utilities.Util;
+
 import java.io.IOException;
 
 public class FirefoxCaps extends BrowserCapabilities {
 
-    private final SettingsReader settingsReader = new SettingsReader();
+    private final SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
     private final Util util = new Util();
+
+    public FirefoxCaps() throws IOException {
+    }
+
     public FirefoxOptions getCaps() throws IOException {
-        settingsReader.readFile();
         FirefoxOptions driverOptions = null;
         FirefoxOptions options = new FirefoxOptions();
-        driverOptions = options.addArguments(util.listToString(settingsReader.getList("browserOptions")));
+        driverOptions = options.addArguments(settingsReader.getString("browserOptions"));
         return driverOptions;
     }
 }
