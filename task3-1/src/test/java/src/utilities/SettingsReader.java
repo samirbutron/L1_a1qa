@@ -34,23 +34,14 @@ public class SettingsReader {
             throw new IllegalArgumentException("Config file must contain a JSON object");
         }
     }
-    public Object getValue(String key) {
-        JsonNode node = objectNode.get(key);
-        if (node.isValueNode()) {
-            return node;
-        } else {
-            throw new IllegalArgumentException(key + " was not found");
-        }
-    }
 
-
+    public Object getValue(String key) {return objectNode.get(key);}
     public String getString(String key) {
         return objectNode.get(key).asText();
     }
     public int getInt(String key) {
         return objectNode.get(key).asInt();
     }
-
 
     public List<Object> getList(String key) {
         JsonNode node = objectNode.get(key);

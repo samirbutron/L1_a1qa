@@ -1,5 +1,6 @@
 package src.utilities;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,13 +16,12 @@ import java.util.function.Function;
 public class WaitsUtil {
     private WebDriverWait waitTime;
     private Browser browser;
-    private SettingsReader testconfig = new SettingsReader("src/test/java/src/config/config.json");
+    private SettingsReader testconfig = new SettingsReader("src/test/java/src/config/testconfig.json");
     private int timeOutInSeconds;
     private int pollingIntervalInSeconds;
 
     public WaitsUtil() throws IOException {
         browser = Browser.getInstance();
-
         timeOutInSeconds = testconfig.getInt("TIMEOUT_IN_SECONDS");
         pollingIntervalInSeconds = testconfig.getInt("POLLING_INTERVAL_IN_SECONDS");
         waitTime = new WebDriverWait(browser.getDriver(),Duration.ofSeconds(timeOutInSeconds));
@@ -39,14 +39,13 @@ public class WaitsUtil {
         }
     }
 
-    /*FIXME desconozco como programar estas funciones
-    public <T> T waitForTrue(Function<Boolean,T> condition){
-        return new WebDriverWait(driver,Duration.ofSeconds(timeOutInSeconds)).until(condition);
+    public <T> T waitForTrue(Function<Boolean,T> condition) throws IOException {
+        return waitTime.until((Function<WebDriver, T>) webDriver -> condition.apply(true));
     }
 
-    public <T> T waitFor(ExpectedCondition condition){
-
-    }*/
+    public <T> T waitFor(ExpectedCondition<T> condition){
+        return waitTime.until(condition);
+    }
 
 
 }
