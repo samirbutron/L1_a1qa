@@ -65,4 +65,8 @@ public class BaseElement {
         waits.waitFor(ExpectedConditions.alertIsPresent());
         browser.getDriver().switchTo().alert().sendKeys(text);
     }
+
+    public void switchToFrame() throws IOException {
+        browser.getDriver().switchTo().frame(1);
+    }
 }
