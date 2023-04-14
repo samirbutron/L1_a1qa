@@ -6,8 +6,11 @@
       <class name="src.test.java.com.sbutron.PageTest">
         <methods>
           <include name="teardown"/>
+          <include name="handles"/>
+          <include name="iframe"/>
           <include name="setup"/>
-          <include name="PrivacyPolicy"/>
+          <include name="alerts"/>
+          <include name="tables"/>
         </methods>
       </class> <!-- src.test.java.com.sbutron.PageTest -->
     </classes>

@@ -2,8 +2,6 @@ package src.main;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import src.browserfactory.Browser;
 import src.utilities.WaitsUtil;
 
@@ -38,6 +36,11 @@ public class BaseElement {
         return browser.getDriver().findElement(uniqueLocator).getText();
     }
 
+    public void sendKeys(String text) throws IOException {
+        waits.waitForElementDisplayed(uniqueLocator);
+        browser.getDriver().findElement(uniqueLocator).sendKeys(text);
+    }
+
     public boolean isElementDisplayed() throws IOException {
         return waits.waitForElementDisplayed(uniqueLocator);
     }
@@ -45,28 +48,5 @@ public class BaseElement {
     public String getAttribute(String attribute) throws IOException {
         waits.waitForElementDisplayed(uniqueLocator);
         return browser.getDriver().findElement(uniqueLocator).getAttribute(attribute);
-    }
-
-    public boolean isEmergentWindowOpen() {
-            return waits.waitFor(ExpectedConditions.alertIsPresent()) != null;
-    }
-
-    public boolean acceptAlert() throws IOException {
-        waits.waitFor(ExpectedConditions.alertIsPresent()).accept();
-        return waits.waitFor(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
-    }
-
-    public String getEmergentWindowText() throws IOException {
-        waits.waitFor(ExpectedConditions.alertIsPresent());
-        return browser.getDriver().switchTo().alert().getText();
-    }
-
-    public void insertTextToPopup(String text) throws IOException {
-        waits.waitFor(ExpectedConditions.alertIsPresent());
-        browser.getDriver().switchTo().alert().sendKeys(text);
-    }
-
-    public void switchToFrame() throws IOException {
-        browser.getDriver().switchTo().frame(1);
     }
 }
