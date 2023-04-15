@@ -6,6 +6,7 @@ import src.browserfactory.Browser;
 import src.utilities.WaitsUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 public class BaseElement {
 
@@ -23,6 +24,10 @@ public class BaseElement {
     public WebElement findElement() throws IOException {
         waits.waitForElementDisplayed(uniqueLocator);
         return browser.getDriver().findElement(uniqueLocator);
+    }
+    public List<WebElement> findElements() throws IOException {
+        waits.waitForElementDisplayed(uniqueLocator);
+        return browser.getDriver().findElements(uniqueLocator);
     }
 
     public void click() throws IOException {

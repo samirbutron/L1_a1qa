@@ -1,17 +1,19 @@
 package src.main;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import src.utilities.BrowserUtilities;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class PageObject {
+    private BrowserUtilities browserUtilities;
     public PageObject() throws IOException {
+        browserUtilities = new BrowserUtilities();
     }
     private static Logger LOGGER = LoggerFactory.getLogger(PageObject.class);
     private BaseElement mainPageCards = new BaseElement(By.xpath("//div[@class='category-cards']"), "mainPageCards");
@@ -25,14 +27,16 @@ public class PageObject {
     private Button promptButton = new Button(By.id("promtButton"), "promptButton");
     private BaseElement promptAcceptanceText = new BaseElement(By.id("promptResult"), "promptAcceptanceTest");
     private BaseElement nestedFramesInAccordion = new BaseElement(By.xpath("//*[@class='text' and contains(text(),'Nested Frames')]"), "nestedFramesInAccordion");
-    private BaseElement iframe = new BaseElement(By.id("frame1"), "iframe");
-    private BaseElement nestedIframe = new BaseElement(By.xpath("//iframe[@srcdoc='<p>Child Iframe</p>']"), "nestedIframe");
-    private BaseElement framesInAccordion = new BaseElement(By.xpath("//*[@class='text' and contains(text(),'Frames')]"),"framesInAccordion");
+    private BaseElement frame1 = new BaseElement(By.id("frame1"), "frame1");
+    private BaseElement frame2 = new BaseElement(By.id("frame2"), "frame2");
+    private BaseElement childIframe = new BaseElement(By.tagName("iframe"), "nestedIframe");
+    private BaseElement frameBody = new BaseElement(By.xpath("//body"), "frameBody");
+    private BaseElement framesInAccordion = new BaseElement(By.xpath("//li[@id='item-2']//*[@class='text' and contains(text(),'Frames')]"),"framesInAccordion");
     private BaseElement webTablesInAccordion = new BaseElement(By.xpath("//*[@class='text' and contains(text(),'Web Tables')]"), "webTablesInAccordion");
     private Button addButton = new Button(By.id("addNewRecordButton"), "addButton");
     private BaseElement tableList = new BaseElement(By.className("rt-tbody"),"tableList");
     private BaseForm userForm = new BaseForm(By.id("userForm"), "userForm");
-
+    private Button actionButtons = new Button(By.className("action-buttons"), "actionButtons");
     private TextBox registrationForm = new TextBox(By.id("registration-form-modal"), "registrationForm");
     private TextBox firstNameInForm = new TextBox(By.id("firstName"),"firstNameInForm");
     private TextBox lastNameInForm = new TextBox(By.id("lastName"), "lastNameInForm");
@@ -51,7 +55,6 @@ public class PageObject {
         cardsList.get(number).click();
     }
     public void clickAlerts() throws IOException {
-
         alertsInAccordion.click();
     }
     public void clickAlertButton() throws  IOException {
@@ -60,7 +63,6 @@ public class PageObject {
     public String getHeaderText() throws IOException {
         return pageMainHeader.getText();
     }
-
     public void clickConfirmButton () throws IOException {
         confirmButton.click();
     }
@@ -76,6 +78,19 @@ public class PageObject {
     public void clickNestedFrames() throws IOException {
         nestedFramesInAccordion.click();
     }
+    public String getFrame1Text() throws IOException {
+        browserUtilities.switchToFrame(frame1.findElement());
+        return frameBody.getText();
+    }
+    public String getIFrameText() throws IOException {
+        browserUtilities.switchToFrame(childIframe.findElement());
+        return frameBody.getText();
+    }
+    public String getFrame2Text() throws IOException {
+        browserUtilities.switchToFrame(frame2.findElement());
+        return frameBody.getText();
+    }
+
     public String getAccordionTextInPosition(int number) throws IOException {
         List<WebElement> listAccordion = leftPanelAccordion.findElement().findElements(By.className("element-group"));
         return listAccordion.get(number).getText();
@@ -108,7 +123,7 @@ public class PageObject {
     public String getTableTextInPosition(int position) throws IOException {
         List<WebElement> list = tableList.findElement().findElements(By.className("rt-tr-group"));
         String[] rowText = list.get(position).getText().split("\n");
-        return String.join(", ", rowText);
+        return String.join(",", rowText).trim();
     }
     public String getTableText() throws IOException {
         List<WebElement> list = tableList.findElement().findElements(By.className("rt-tr-group"));
@@ -125,6 +140,14 @@ public class PageObject {
             return false;
         }
     }
+    public void deleteRecordInPosition(int position) throws IOException {
+        List<WebElement> deleteButtons = actionButtons.findElement().findElements(By.xpath("//*[starts-with(@id,'delete-record-')]"));
+        deleteButtons.get(position).click();
+    }
+    public int getRecordsNumber() throws IOException {
+        return actionButtons.findElements().size();
+    }
+
     public void clickSubmitButton () throws IOException {
         submitButton.click();
     }

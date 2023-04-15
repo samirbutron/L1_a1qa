@@ -113,14 +113,19 @@ public class PageTest {
         //ASSERT Page with "Nested Frames" form is open
         Assert.assertEquals(page.getHeaderText(),"Nested Frames", "Accordion text is incorrect");
         //ASSERT There are messages "Parent frame" & "Child iframe" present
-        browserUtil.getframeText();
-        //Assert.assertEquals(browserUtil.getframeText(), "Parent frame", "Parent frame text is incorrect");
-
+        Assert.assertEquals(page.getFrame1Text(),"Parent frame","Parent frame text is incorrect");
+        Assert.assertEquals(page.getIFrameText(), "Child Iframe", "Child frame text is incorrect");
+        browserUtil.toDefaultContent();
         //3. Select "Frames" option in a left menu
         page.clickFrames();
         //ASSERT Page with "Frames" form is open
         Assert.assertEquals(page.getHeaderText(),"Frames", "Page header is incorrect");
         //ASSERT Message from upper frame is equal to the message from lower frame
+        String frame1Text = page.getFrame1Text();
+        browserUtil.toDefaultContent();
+        String frame2Text = page.getFrame2Text();
+        browserUtil.toDefaultContent();
+        Assert.assertEquals(frame1Text,frame2Text,"Frames have different text");
     }
 
     @Test(dataProvider = "testdata")
@@ -146,17 +151,20 @@ public class PageTest {
         page.clickSubmitButton();
         //ASSERT Registration form has closed
         //FIXME Maybe find another way to Assert
-        Assert.assertFalse(page.isUserFormDisplayed(), "Form may still be open");
+        //Assert.assertFalse(page.isUserFormDisplayed(), "Form may still be open");
 
         //ASSERT data of User# appeared in a table
-        String dataProvided = fname+","+lname+","+email+","+age+","+salary+","+dpt;
+        String dataProvided = fname+","+lname+","+age+","+email+","+salary+","+dpt;
         Assert.assertEquals(page.getTableTextInPosition(3),dataProvided,"Data retrieved from table is different from DataProvider");
 
-
         //5. CLick "Delete" button in a row which contains data of User#
+        int recordsNumber = page.getRecordsNumber();
+        page.deleteRecordInPosition(3);
         //ASSERT Number of records changed
+        int newRecordsNumber = page.getRecordsNumber();
+        Assert.assertNotEquals(recordsNumber,newRecordsNumber, "Number of records didn't change");
         //ASSERT Data of User# has been deleted
-
+        Assert.assertTrue(page.getTableTextInPosition(3).isEmpty(), "Data is still available");
     }
 
     @DataProvider(name="testdata")

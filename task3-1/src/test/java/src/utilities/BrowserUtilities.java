@@ -1,6 +1,7 @@
 package src.utilities;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import src.browserfactory.Browser;
 import org.slf4j.Logger;
@@ -40,21 +41,8 @@ public class BrowserUtilities {
         browser.getDriver().switchTo().alert().sendKeys(text);
     }
 
-    public void switchToFrame() throws IOException {
-        browser.getDriver().switchTo().frame(1);
-    }
-    public String getframeText() throws IOException {
-        browser.getDriver().switchTo().frame(1);
-        return browser.getDriver().findElement(By.tagName("body")).getText();
-    }
-
-    public String getChildIframeText() throws IOException {
-        int size = browser.getDriver().findElements(By.tagName("iframe")).size();
-        LOGGER.debug(String.valueOf(size));
-        browser.getDriver().switchTo().frame(0);
-        //WebElement frame2 = browser.getDriver().findElement(By.tagName("iframe"));
-        //browser.getDriver().switchTo().frame(frame2);
-        return browser.getDriver().findElement(By.tagName("body")).getText();
+    public void switchToFrame(WebElement frame) throws IOException {
+        browser.getDriver().switchTo().frame(frame);
     }
 
     public String getWindowHandle() throws IOException {
@@ -75,4 +63,7 @@ public class BrowserUtilities {
         return newWindowHandle;
     }
 
+    public void toDefaultContent() throws IOException {
+        browser.getDriver().switchTo().defaultContent();
+    }
 }
