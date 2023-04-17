@@ -1,21 +1,16 @@
 package src.test.java.com.sbutron;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.ConfigurationSource;
-import org.apache.logging.log4j.core.config.Configurator;
-
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import src.browserfactory.Browser;
 import src.main.PageObject;
 import src.utilities.BrowserUtilities;
 import src.utilities.RandomUtils;
 import src.utilities.SettingsReader;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +18,6 @@ import java.util.Set;
 
 public class PageTest {
     private Browser browser;
-    //private static Logger LOGGER;
-    private final SettingsReader config = new SettingsReader("src/test/java/src/config/config.json");
     private  final SettingsReader testconfig = new SettingsReader("src/test/java/src/config/testconfig.json");
     private final SettingsReader testdata = new SettingsReader("src/test/java/src/config/testdata.json");
     private PageObject page;
@@ -36,11 +29,6 @@ public class PageTest {
 
     @BeforeTest
     public void setup() throws IOException {
-        //ConfigurationSource source = new ConfigurationSource(new FileInputStream("src/test/log4j.xml"));
-        //LoggerContext context = (LoggerContext) LogManager.getContext(false);
-        //context.setConfigLocation(source);
-        //Configurator.initialize(context, source);
-        //LOGGER = (Logger) LogManager.getLogger();
         browser = Browser.getInstance();
         page = new PageObject();
         browserUtil = new BrowserUtilities();
@@ -150,8 +138,7 @@ public class PageTest {
         // call the fillForm method with the retrieved values
         page.clickSubmitButton();
         //ASSERT Registration form has closed
-        //FIXME Maybe find another way to Assert
-        //Assert.assertFalse(page.isUserFormDisplayed(), "Form may still be open");
+        Assert.assertFalse(page.isRegistrationFormDisplayed(), "Form may still be open");
 
         //ASSERT data of User# appeared in a table
         String dataProvided = fname+","+lname+","+age+","+email+","+salary+","+dpt;
@@ -233,10 +220,3 @@ public class PageTest {
         Assert.assertEquals(page.getHeaderText(),"Links", "Page header is incorrect");
     }
 }
-
-/*FIXME PENDIENTESSSS:
-- I am not using the BaseForm class. I am making assertions by getting headerText.
-- I am lacking a logger, an Where should the logger be used?
-- I am struggling with the DDT part
-- I am struggling with the iframe assertions
-*/

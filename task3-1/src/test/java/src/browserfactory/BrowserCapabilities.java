@@ -4,8 +4,7 @@ import org.openqa.selenium.remote.AbstractDriverOptions;
 
 import java.io.IOException;
 
-/*FIXME Idealmente pienso que esta clase debería proveer un método que las clases hijas sobreescriban
-entonces puede ser que esta implementacion este errada */
+/*FIXME Idealmente pienso que esta clase debería proveer un método que las clases hijas sobreescriban*/
 public class BrowserCapabilities {
     private static final String CHROME_BROWSER = "chrome";
     private static final String FIREFOX_BROWSER = "firefox";

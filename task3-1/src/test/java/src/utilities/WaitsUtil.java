@@ -9,6 +9,7 @@ import src.browserfactory.Browser;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 public class WaitsUtil {
@@ -25,7 +26,12 @@ public class WaitsUtil {
         waitTime = new WebDriverWait(browser.getDriver(),Duration.ofSeconds(timeOutInSeconds));
     }
     public boolean waitForElementDisplayed(By locator) throws IOException {
-        return waitTime.until(ExpectedConditions.visibilityOf(browser.getDriver().findElement(locator))).isDisplayed();
+        try {
+            waitTime.until(ExpectedConditions.visibilityOf(browser.getDriver().findElement(locator))).isDisplayed();
+            return true;
+        } catch (NoSuchElementException e){
+            return false;
+        }
     }
 
     public boolean waitForElementToBeClickable(By locator){

@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: src.test.java.com.sbutron.PageTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 1, Errors: 0, Skipped: 5, Time elapsed: 0.739 s <<< FAILURE! - in src.test.java.com.sbutron.PageTest
-setup(src.test.java.com.sbutron.PageTest)  Time elapsed: 0.583 s  <<< FAILURE!
-java.lang.ClassCastException: class org.apache.logging.log4j.core.Logger cannot be cast to class org.slf4j.Logger (org.apache.logging.log4j.core.Logger and org.slf4j.Logger are in unnamed module of loader 'app')
-	at src.test.java.com.sbutron.PageTest.setup(PageTest.java:31)
+Tests run: 7, Failures: 1, Errors: 0, Skipped: 6, Time elapsed: 1.942 s <<< FAILURE! - in src.test.java.com.sbutron.PageTest
+setup(src.test.java.com.sbutron.PageTest)  Time elapsed: 1.353 s  <<< FAILURE!
+java.lang.UnsupportedClassVersionError: Preview features are not enabled for src/browserfactory/BrowserFactory (class file version 61.65535). Try running with '--enable-preview'
+	at src.test.java.com.sbutron.PageTest.setup(PageTest.java:28)
 

@@ -1,7 +1,7 @@
 package src.main;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.NoSuchElementException;
 import src.browserfactory.Browser;
 import src.utilities.WaitsUtil;
 
@@ -21,7 +21,12 @@ public class BaseForm {
     }
 
     public boolean isFormOpen() throws IOException {
-        return waits.waitForElementDisplayed(uniqueFormLocator);
+        try {
+            waits.waitForElementDisplayed(uniqueFormLocator);
+            return true;
+        } catch (NoSuchElementException e){
+            return false;
+        }
     }
 
      public Label getFormLabel() throws IOException {

@@ -1,20 +1,16 @@
 package src.utilities;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import src.browserfactory.Browser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Set;
 
 public class BrowserUtilities {
 
-    private Browser browser;
-    private WaitsUtil waits = new WaitsUtil();
-    //FIXME borrar logger?
-    private static final Logger LOGGER = LoggerFactory.getLogger(BrowserUtilities.class);
+    private final Browser browser;
+    private final WaitsUtil waits = new WaitsUtil();
 
     public BrowserUtilities() throws IOException {
         browser = Browser.getInstance();
@@ -26,7 +22,7 @@ public class BrowserUtilities {
     public boolean isEmergentWindowOpen() {
         return waits.waitFor(ExpectedConditions.alertIsPresent()) != null;
     }
-    public boolean acceptAlert() throws IOException {
+    public boolean acceptAlert() {
         waits.waitFor(ExpectedConditions.alertIsPresent()).accept();
         return waits.waitFor(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
     }
