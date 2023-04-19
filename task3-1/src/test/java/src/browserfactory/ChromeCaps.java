@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ChromeCaps extends BrowserCapabilities {
 
-    private final SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
+    private final SettingsReader settingsReader = new SettingsReader("src/test/src/config/config.json");
     private Util util = new Util();
 
     public ChromeCaps() throws IOException {

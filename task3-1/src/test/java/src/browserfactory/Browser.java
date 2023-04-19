@@ -12,7 +12,7 @@ public class Browser {
     public static WebDriver driver;
 
     private Browser() throws IOException {
-        SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
+        SettingsReader settingsReader = new SettingsReader("src/test/src/config/config.json");
         driver = BrowserFactory.getDriver(settingsReader.getString("browser"));
     }
     public static Browser getInstance() throws IOException {

@@ -1,4 +1,4 @@
-package src.test.java.com.sbutron;
+package src.test.com.sbutron;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -18,8 +18,8 @@ import java.util.Set;
 
 public class PageTest {
     private Browser browser;
-    private  final SettingsReader testconfig = new SettingsReader("src/test/java/src/config/testconfig.json");
-    private final SettingsReader testdata = new SettingsReader("src/test/java/src/config/testdata.json");
+    private  final SettingsReader testconfig = new SettingsReader("src/test/src/config/testconfig.json");
+    private final SettingsReader testdata = new SettingsReader("src/test/src/config/testdata.json");
     private PageObject page;
     private BrowserUtilities browserUtil;
     private RandomUtils randomUtil;
@@ -29,6 +29,7 @@ public class PageTest {
 
     @BeforeTest
     public void setup() throws IOException {
+        System.out.println("Log4j configuration file path: " + System.getProperty("log4j.configurationFile"));
         browser = Browser.getInstance();
         page = new PageObject();
         browserUtil = new BrowserUtilities();

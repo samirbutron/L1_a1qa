@@ -2,20 +2,16 @@ package src.main;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import src.test.java.com.sbutron.PageTest;
 import src.utilities.BrowserUtilities;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class PageObject {
     private final BrowserUtilities browserUtilities;
-    private static final Logger logger = LoggerFactory.getLogger(PageTest.class);
+    private MyLogger logger;
     public PageObject() throws IOException {
         browserUtilities = new BrowserUtilities();
+        logger = MyLogger.getInstance();
     }
     private BaseElement mainPageCards = new BaseElement(By.xpath("//div[@class='category-cards']"), "mainPageCards");
     private BaseElement pageMainHeader = new BaseElement(By.className("main-header"),"pageMainHeader");

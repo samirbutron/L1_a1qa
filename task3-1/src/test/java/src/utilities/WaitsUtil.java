@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class WaitsUtil {
     private WebDriverWait waitTime;
     private Browser browser;
-    private SettingsReader testconfig = new SettingsReader("src/test/java/src/config/testconfig.json");
+    private SettingsReader testconfig = new SettingsReader("src/test/src/config/testconfig.json");
     private int timeOutInSeconds;
     private int pollingIntervalInSeconds;
 
