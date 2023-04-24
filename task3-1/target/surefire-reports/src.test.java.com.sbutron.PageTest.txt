@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: src.test.java.com.sbutron.PageTest
--------------------------------------------------------------------------------
-Tests run: 7, Failures: 1, Errors: 0, Skipped: 6, Time elapsed: 1.942 s <<< FAILURE! - in src.test.java.com.sbutron.PageTest
-setup(src.test.java.com.sbutron.PageTest)  Time elapsed: 1.353 s  <<< FAILURE!
-java.lang.UnsupportedClassVersionError: Preview features are not enabled for src/browserfactory/BrowserFactory (class file version 61.65535). Try running with '--enable-preview'
-	at src.test.java.com.sbutron.PageTest.setup(PageTest.java:28)
-
