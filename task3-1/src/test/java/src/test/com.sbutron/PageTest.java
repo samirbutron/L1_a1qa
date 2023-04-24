@@ -29,7 +29,6 @@ public class PageTest {
 
     @BeforeTest
     public void setup() throws IOException {
-        System.out.println("Log4j configuration file path: " + System.getProperty("log4j.configurationFile"));
         browser = Browser.getInstance();
         page = new PageObject();
         browserUtil = new BrowserUtilities();
