@@ -2,14 +2,11 @@ package src.browserfactory;
 
 import org.openqa.selenium.remote.AbstractDriverOptions;
 
-import java.io.IOException;
-
-/*FIXME Idealmente pienso que esta clase debería proveer un método que las clases hijas sobreescriban*/
 public class BrowserCapabilities {
     private static final String CHROME_BROWSER = "chrome";
     private static final String FIREFOX_BROWSER = "firefox";
-    public AbstractDriverOptions getCaps(String browserType) throws IOException {
-        AbstractDriverOptions options = null;
+    public static AbstractDriverOptions getCaps(String browserType) {
+        AbstractDriverOptions options;
         switch (browserType) {
             case CHROME_BROWSER -> {
                 ChromeCaps capabilitiesC = new ChromeCaps();

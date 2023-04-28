@@ -1,23 +1,19 @@
 package src.browserfactory;
-
 import org.openqa.selenium.chrome.ChromeOptions;
 import src.utilities.SettingsReader;
 import src.utilities.Util;
 
-import java.io.IOException;
-
 public class ChromeCaps extends BrowserCapabilities {
 
-    private final SettingsReader settingsReader = new SettingsReader("src/test/src/config/config.json");
-    private Util util = new Util();
+    private final SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
 
-    public ChromeCaps() throws IOException {
+    public ChromeCaps() {
     }
 
-    public ChromeOptions getCaps() throws IOException {
-        ChromeOptions driverOptions = null;
+    public ChromeOptions getCaps() {
+        ChromeOptions driverOptions;
         ChromeOptions options = new ChromeOptions();
-        driverOptions = options.addArguments(util.listToString(settingsReader.getList("browserOptions")));
+        driverOptions = options.addArguments(Util.listToString(settingsReader.getList("browserOptions")));
         return driverOptions;
     }
 

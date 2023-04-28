@@ -7,32 +7,41 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
+import src.utilities.SettingsReader;
 
 import java.io.IOException;
 
 public class BrowserFactory {
-    private static BrowserCapabilities browserCapabilities = new BrowserCapabilities();
-
+    static SettingsReader settingsReader = new SettingsReader("src/test/java/src/config/config.json");
+    private static WebDriver driverInstance;
     private BrowserFactory(){
-    }
-    public static WebDriver getDriver(String browser) throws IOException {
-        switch (browser) {
+        switch (settingsReader.getString("browser")) {
             case "chrome" -> {
                 WebDriverManager.chromedriver().setup();
-                ChromeOptions options = (ChromeOptions) browserCapabilities.getCaps(browser);
-                return new ChromeDriver(options);
+                ChromeOptions options = (ChromeOptions) BrowserCapabilities.getCaps(settingsReader.getString("browser"));
+                driverInstance = new ChromeDriver(options);
             }
             case "firefox" -> {
                 WebDriverManager.firefoxdriver().setup();
-                FirefoxOptions options = (FirefoxOptions) browserCapabilities.getCaps(browser);
-                return new FirefoxDriver(options);
+                FirefoxOptions options = (FirefoxOptions) BrowserCapabilities.getCaps(settingsReader.getString("browser"));
+                driverInstance = new FirefoxDriver(options);
             }
-            case default -> throw new IllegalArgumentException("Invalid browser name: " + browser);
+            case default -> throw new IllegalArgumentException("Invalid browser name: " + settingsReader.getString("browser"));
         }
     }
+    public static WebDriver getDriver() {
+        if(driverInstance == null ) {
+            new BrowserFactory();
+        }
+        return driverInstance;
+    }
 
-    private static AbstractDriverOptions getCaps(String browserType) throws IOException {
-        AbstractDriverOptions options = null;
+    public static void quitInstance(){
+        driverInstance.quit();
+    }
+
+    private static AbstractDriverOptions getCaps(String browserType) {
+        AbstractDriverOptions options;
         switch (browserType) {
             case "chrome" -> {
                 ChromeCaps capabilitiesC = new ChromeCaps();

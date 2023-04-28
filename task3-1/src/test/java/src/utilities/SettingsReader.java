@@ -1,5 +1,6 @@
 package src.utilities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -10,23 +11,41 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class SettingsReader {
-    //;
     private final ObjectMapper objectMapper;
     private ObjectNode objectNode;
 
-    public SettingsReader(Path filepath) throws IOException {
+    public SettingsReader(Path filepath) {
         objectMapper = new ObjectMapper();
-        String contents = new String(Files.readAllBytes(filepath));
-        objectNode = (ObjectNode) objectMapper.readTree(contents);
+        String contents;
+        try {
+            contents = new String(Files.readAllBytes(filepath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            objectNode = (ObjectNode) objectMapper.readTree(contents);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public SettingsReader(String filepath) throws IOException{
+    public SettingsReader(String filepath) {
         this(Path.of(filepath));
     }
 
-    public void readFile(String filepath) throws IOException {
-        byte[] fileBytes = Files.readAllBytes(Path.of(filepath));
-        JsonNode jsonNode = objectMapper.readTree(fileBytes);
+    public void readFile(String filepath) {
+        byte[] fileBytes = new byte[0];
+        try {
+            fileBytes = Files.readAllBytes(Path.of(filepath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(fileBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (jsonNode instanceof ObjectNode) {
             objectNode = (ObjectNode) jsonNode;
         } else {

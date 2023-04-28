@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Util {
 
-    public Util(){
+    private Util(){
 
     }
-    public String listToString(List<Object> list) {
+    public static String listToString(List<Object> list) {
         String stringList = list.toString();
         stringList = stringList.replace("[", "");
         stringList = stringList.replace("]", "");

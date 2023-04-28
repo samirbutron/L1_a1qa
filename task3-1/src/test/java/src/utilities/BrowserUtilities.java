@@ -2,53 +2,51 @@ package src.utilities;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import src.browserfactory.Browser;
+import src.browserfactory.BrowserFactory;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class BrowserUtilities {
+    private void BrowserUtil () {
 
-    private final Browser browser;
-    private final WaitsUtil waits = new WaitsUtil();
-
-    public BrowserUtilities() throws IOException {
-        browser = Browser.getInstance();
     }
-
-    public String getTitle() throws IOException {
-        return browser.getDriver().getTitle();
-    }
-    public boolean isEmergentWindowOpen() {
-        return waits.waitFor(ExpectedConditions.alertIsPresent()) != null;
-    }
-    public boolean acceptAlert() {
-        waits.waitFor(ExpectedConditions.alertIsPresent()).accept();
-        return waits.waitFor(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
+    public static void goToUrl(String url){
+        BrowserFactory.getDriver().get(url);
     }
 
-    public String getEmergentWindowText() throws IOException {
-        waits.waitFor(ExpectedConditions.alertIsPresent());
-        return browser.getDriver().switchTo().alert().getText();
+    public static String getTitle() {
+        return BrowserFactory.getDriver().getTitle();
+    }
+    public static boolean isEmergentWindowOpen() {
+        return WaitsUtil.waitFor(ExpectedConditions.alertIsPresent()) != null;
+    }
+    public static boolean acceptAlert() {
+        WaitsUtil.waitFor(ExpectedConditions.alertIsPresent()).accept();
+        return WaitsUtil.waitFor(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
     }
 
-    public void insertTextToPopup(String text) throws IOException {
-        waits.waitFor(ExpectedConditions.alertIsPresent());
-        browser.getDriver().switchTo().alert().sendKeys(text);
+    public static String getEmergentWindowText() {
+        WaitsUtil.waitFor(ExpectedConditions.alertIsPresent());
+        return BrowserFactory.getDriver().switchTo().alert().getText();
     }
 
-    public void switchToFrame(WebElement frame) throws IOException {
-        browser.getDriver().switchTo().frame(frame);
+    public static void insertTextToPopup(String text) {
+        WaitsUtil.waitFor(ExpectedConditions.alertIsPresent());
+        BrowserFactory.getDriver().switchTo().alert().sendKeys(text);
     }
 
-    public String getWindowHandle() throws IOException {
-        return browser.getDriver().getWindowHandle();
-    }
-    public Set<String> getWindowHandles() throws IOException {
-        return browser.getDriver().getWindowHandles();
+    public static void switchToFrame(WebElement frame) {
+        BrowserFactory.getDriver().switchTo().frame(frame);
     }
 
-    public String getNewTabHandle(Set<String> windowHandles, Set<String> updatedWindowHandles) {
+    public static String getWindowHandle() {
+        return BrowserFactory.getDriver().getWindowHandle();
+    }
+    public static Set<String> getWindowHandles() {
+        return BrowserFactory.getDriver().getWindowHandles();
+    }
+
+    public static String getNewTabHandle(Set<String> windowHandles, Set<String> updatedWindowHandles) {
         String newWindowHandle = null;
         for (String windowHandle : updatedWindowHandles) {
             if (!windowHandles.contains(windowHandle)) {
@@ -59,7 +57,8 @@ public class BrowserUtilities {
         return newWindowHandle;
     }
 
-    public void toDefaultContent() throws IOException {
-        browser.getDriver().switchTo().defaultContent();
+    public static void toDefaultContent() {
+        BrowserFactory.getDriver().switchTo().defaultContent();
     }
+
 }

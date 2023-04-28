@@ -2,10 +2,8 @@ package src.main;
 
 import org.openqa.selenium.By;
 
-
-public class Label extends BaseElement{
-
-    public Label(By uniqueLocator, String elementName) {
+public class Link extends BaseElement{
+    public Link(By uniqueLocator, String elementName) {
         super(uniqueLocator, elementName);
     }
 }

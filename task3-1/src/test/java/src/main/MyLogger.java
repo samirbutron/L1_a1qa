@@ -7,10 +7,9 @@ import org.apache.logging.log4j.Logger;
 
 public class MyLogger {
     private static MyLogger instance = null;
-    private final Logger logger;
+    private static final Logger logger = LogManager.getLogger();
 
     private MyLogger() {
-        logger = LogManager.getLogger();
     }
 
     public static synchronized MyLogger getInstance() {
@@ -23,7 +22,7 @@ public class MyLogger {
     public void debug(String message) {
         logger.debug(message);
     }
-    public void info(String message) {
+    public static void info(String message) {
         logger.info(message);
     }
 
